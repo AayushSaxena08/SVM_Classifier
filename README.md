@@ -2,7 +2,7 @@
 
 Hello friends,
 
-Support Vector Machines are supervised machine learning algorithms that are used for classification and regression purposes. In this repo, I built a Support Vector Machines classifier to classify a credit card fraudalent case. So, let's get started.
+Support Vector Machines are supervised machine learning algorithms that are used for classification and regression purposes. In this repo, I have built a Support Vector Machines classifier to predict a Pulsar Star with the given attributes. So, let's get started.
 
 <a class="anchor" id="0.1"></a>
 # **Table of Contents**
@@ -38,7 +38,7 @@ Support Vector Machines are supervised machine learning algorithms that are used
 
 **Support Vector Machines** (SVMs in short) are machine learning algorithms that are used for classification and regression purposes. SVMs are one of the powerful machine learning algorithms for classification, regression and outlier detection purposes. An SVM classifier builds a model that assigns new data points to one of the given categories. Thus, it can be viewed as a non-probabilistic binary linear classifier.
 
-The original SVM algorithm was developed by Vladimir N Vapnik and Alexey Ya. Chervonenkis in 1963. At that time, the algorithm was in early stages. The only possibility is to draw hyperplanes for linear classifier. In 1992, Bernhard E. Boser, Isabelle M Guyon and Vladimir N Vapnik suggested a way to create non-linear classifiers by applying the kernel trick to maximum-margin hyperplanes. The current standard was proposed by Corinna Cortes and Vapnik in 1993 and published in 1995.
+The original SVM algorithm was developed by Vladimir N Vapnik and Alexey Ya. Chervonenkis in 1963. At that time, the algorithm was in early stages. The only possibility is to draw hyperplanes for linear classifier. In 1992, Bernhard E. Boser, Isabelle M Guyon and Vladimir N Vapnik suggested a way to create non-linear classifiers by applying the kernel trick to get maximum-margin hyperplanes. The current standard was proposed by Corinna Cortes and Vapnik in 1993 and published in 1995.
 
 SVMs can be used for linear classification purposes. In addition to performing linear classification, SVMs can efficiently perform a non-linear classification using the **kernel trick**. It enable us to implicitly map the inputs into high dimensional feature spaces.
 
@@ -58,7 +58,7 @@ A hyperplane is a decision boundary which separates between given set of data po
 
 ### Support Vectors
 
-Support vectors are the sample data points, which are closest to the hyperplane.  These data points will define the separating line or hyperplane better by calculating margins.
+Support vectors are the sample data points, which are closest to the hyperplane.  These data points will decide the orientation and position of the separating line or hyperplane better by calculating margins.
 
 
 ### Margin
@@ -76,7 +76,6 @@ The following diagram illustrates these concepts visually.
 ### SVM Under the hood
 
 In SVMs, our main objective is to select a hyperplane with the maximum possible margin between support vectors in the given dataset. SVM searches for the maximum margin hyperplane in the following 2 step process –
-
 
 1.	Generate hyperplanes which segregates the classes in the best possible way. There are many hyperplanes that might classify the data. We should look for the best hyperplane that represents the largest separation, or margin, between the two classes.
 
@@ -122,9 +121,9 @@ In the context of SVMs, there are 4 popular kernels – `Linear kernel`,`Polynom
 
 In linear kernel, the kernel function takes the form of a linear function as follows-
 
-**linear kernel : K($x_{i}$ , $x_{j}$ ) = $x_{i}^{T}$ . $x_{j}$**
+linear kernel : K( $x_{i}$ , $x_{j}$ ) = $x_{i}^{T}$ . $x_{j}$
 
-Linear kernel is used when the data is linearly separable. It means that data can be separated using a single line. It is one of the most common kernels to be used. It is mostly used when there are large number of features in a dataset. Linear kernel is often used for text classification purposes.
+Linear kernel is used when the data is linearly separable. It means that data can be separated using a single line. It is one of the most common kernels to be used. It is mostly used when there are large number of features in a dataset. Linear kernel is often used for **text classification** purposes.
 
 Training with a linear kernel is usually faster, because we only need to optimize the C regularization parameter. When training with other kernels, we also need to optimize the γ parameter. So, performing a grid search will usually take more time.
 
@@ -225,36 +224,127 @@ Each candidate is described by 8 continuous variables, and a single class variab
 
 [Table of Contents](#0.1)
 
-
 I will start off by importing the required Python libraries.
 
 # **7.Import dataset** <a class="anchor" id="7"></a>
 
 [Table of Contents](#0.1)
 
+Use pd.read_csv() to read the csv file
 
 # **8. Exploratory data analysis** <a class="anchor" id="8"></a>
 
 [Table of Contents](#0.1)
 
-Now, I will explore the data to gain insights about the data. We can see that there are 9 variables in the dataset. 8 are continuous variables and 1 is discrete variable. The discrete variable is `target_class` variable. It is also the target variable. Now, I will view the column names to check for leading and trailing spaces.
+Now, I will explore the data to gain insights about the data. We can see that there are 9 variables in the dataset. 8 are continuous variables and 1 is discrete variable. The discrete variable is `target_class` variable. It is also the target variable. 
 
 # **9. Declare feature vector and target variable** <a class="anchor" id="9"></a>
 
 [Table of Contents](#0.1)
 
+X = df.drop(['target_class'], axis=1)
+
+y = df['target_class']
+
 # **10. Split data into separate training and test set** <a class="anchor" id="10"></a>
 
 [Table of Contents](#0.1)
+
+Use train_test_split from sklearn.model_selection
 
 # **11. Feature Scaling** <a class="anchor" id="11"></a>
 
 [Table of Contents](#0.1)
 
+Use StandardScaler from sklearn.preprocessing
+
 # **12. Run SVM with default hyperparameters** <a class="anchor" id="12"></a>
 
 [Table of Contents](#0.1)
 
+Default hyperparameter means C=1.0, kernel=rbf and gamma=auto among other parameters. Also trained with C=100.0 and C=1000.0 with kernal=rbf 
+
 # **13. Run SVM with linear kernel** <a class="anchor" id="13"></a>
 
 [Table of Contents](#0.1)
+
+linear_svc=SVC(kernel='linear', C=1.0). Also trained with C=100.0 and C=1000.0 with kernal=rbf 
+
+# **14. Run SVM with polynomial kernel** <a class="anchor" id="14"></a>
+
+[Table of Contents](#0.1)
+
+poly_svc=SVC(kernel='poly', C=1.0). Also trained with C=100.0 and C=1000.0 with kernal=rbf 
+
+# **15. Run SVM with sigmoid kernel** <a class="anchor" id="15"></a>
+
+[Table of Contents](#0.1)
+
+sigmoid_svc=SVC(kernel='sigmoid', C=1.0). Also trained with C=100.0 and C=1000.0 with kernal=rbf 
+
+### Comments
+
+We can see that sigmoid kernel is also performing poorly just like with polynomial kernel. We get maximum accuracy with rbf and linear kernel with C=100.0. and the accuracy is 0.9832. Based on the above analysis we can conclude that our classification model accuracy is very good. Our model is doing a very good job in terms of predicting the class labels.
+
+# **16. Confusion Matrix** <a class="anchor" id="16"></a>
+
+[Table of Contents](#0.1)
+
+A confusion matrix is a tool for summarizing the performance of a classification algorithm. A confusion matrix will give us a clear picture of classification model performance and the types of errors produced by the model. It gives us a summary of correct and incorrect predictions broken down by each category. The summary is represented in a tabular form.
+
+Four types of outcomes are possible while evaluating a classification model performance. These four outcomes are described below:-
+
+- **True Positives (TP)** – True Positives occur when we predict an observation belongs to a certain class and the observation actually belongs to that class.
+
+- **True Negatives (TN)** – True Negatives occur when we predict an observation does not belong to a certain class and the observation actually does not belong to that class.
+
+- **False Positives (FP)** – False Positives occur when we predict an observation belongs to a    certain class but the observation actually does not belong to that class. This type of error is called **Type I error.**
+
+- **False Negatives (FN)** – False Negatives occur when we predict an observation does not belong to a certain class but the observation actually belongs to that class. This is a very serious error and it is called **Type II error.**
+
+# **17. Classification Matrices** <a class="anchor" id="17"></a>
+
+[Table of Contents](#0.1)
+
+**Classification report** is another way to evaluate the classification model performance. It displays the  **precision**, **recall**, **f1** and **support** scores for the model. I have described these terms in later. We can import classification_report from sklearn.metrics
+
+# **18. ROC-AUC Curve** <a class="anchor" id="18"></a>
+
+[Table of Contents](#0.1)
+
+Another tool to measure the classification model performance visually is **ROC Curve**. ROC Curve stands for **Receiver Operating Characteristic Curve**. An **ROC Curve** is a plot which shows the performance of a classification model at various classification threshold levels. 
+
+The **ROC Curve** plots the **True Positive Rate (TPR)** against the **False Positive Rate (FPR)** at various threshold levels.
+
+**True Positive Rate (TPR)** is also called **Recall**. It is defined as the ratio of `TP to (TP + FN)`.
+
+**False Positive Rate (FPR)** is defined as the ratio of `FP to (FP + TN)`.
+
+![image](https://user-images.githubusercontent.com/35486320/190153769-e862ecd1-c0f0-4b5a-9a12-eb75ca71a3cf.png)
+
+**ROC AUC** stands for **Receiver Operating Characteristic - Area Under Curve**. It is a technique to compare classifier performance. In this technique, we measure the `area under the curve (AUC)`. A perfect classifier will have a ROC AUC equal to 1, whereas a purely random classifier will have a ROC AUC equal to 0.5. 
+
+So, **ROC AUC** is the percentage of the ROC plot that is underneath the curve.
+
+### Comments
+
+- ROC AUC is a single number summary of classifier performance. The higher the value, the better the classifier.
+
+- ROC AUC of our model approaches towards 1. So, we can conclude that our classifier does a good job in classifying the pulsar star.
+
+- You can calculate ROC AUC value using cross_val_score using sklearn.model_selection
+
+# **19. Stratified k-fold Cross Validation with shuffle split** <a class="anchor" id="19"></a>
+
+[Table of Contents](#0.1)
+
+k-fold cross-validation is a very useful technique to evaluate model performance. But, it fails here because we have a imbalnced dataset. So, in the case of imbalanced dataset, I will use another technique to evaluate model performance. It is called `stratified k-fold cross-validation`.
+
+In `stratified k-fold cross-validation`, we split the data such that the proportions between classes are the same in each fold as they are in the whole dataset. Moreover, I will shuffle the data before splitting because shuffling yields much better result.
+
+\begin{code}
+from sklearn.model_selection import KFold
+kfold=KFold(n_splits=5, shuffle=True, random_state=0)
+linear_svc=SVC(kernel='linear')
+linear_scores = cross_val_score(linear_svc, X, y, cv=kfold)
+\end{code}
